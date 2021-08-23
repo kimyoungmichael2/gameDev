@@ -96,7 +96,35 @@ game.input.keyboard.on("release", (evt) => {
 
 mike.body.collider.type = CollisionType.Active;
 han.body.collider.type = CollisionType.Active;
+mike.on("postupdate", () => {
+    if (mike.pos.x > game.drawWidth) {
+        mike.pos.x = game.drawWidth;
+    }
+    if (mike.pos.x < 0) {
+        mike.pos.x = 0;
+    }
+    if (mike.pos.y > game.drawHeight) {
+        mike.pos.y = game.drawHeight;
+    }
+    if (mike.pos.y < 0) {
+        mike.pos.y = 0;
+    }
+})
 
+han.on("postupdate", () => {
+    if (han.pos.x > game.drawWidth) {
+        han.pos.x = game.drawWidth;
+    }
+    if (han.pos.x < 0) {
+        han.pos.x = 0;
+    }
+    if (han.pos.y > game.drawHeight) {
+        han.pos.y = game.drawHeight;
+    }
+    if (han.pos.y < 0) {
+        han.pos.y = 0;
+    }
+})
 game.add(mike);
 game.add(han);
 
