@@ -1,5 +1,5 @@
 // Excalibur is loaded into the ex global namespace
-import { Actor, Engine, Color, CollisionType } from 'excalibur'
+import { Actor, Engine, Color, CollisionType, Label, TextAlign} from 'excalibur'
 
 // ./src/index.ts
 const game = new Engine({
@@ -13,6 +13,10 @@ const mike = new Actor({
     width:50,
     height:50,
 });
+
+const mikeLabel = new Label('Michael', mike.pos.x, mike.pos.y, '100px Arial');
+mikeLabel.fontSize = 100;
+mikeLabel.textAlign = TextAlign.Center;
 
 const han = new Actor({
     x: 300,
@@ -109,6 +113,8 @@ mike.on("postupdate", () => {
     if (mike.pos.y < 0) {
         mike.pos.y = 0;
     }
+    mikeLabel.pos.x = mike.pos.x;
+    mikeLabel.pos.y = mike.pos.y;
 })
 
 han.on("postupdate", () => {
@@ -127,6 +133,6 @@ han.on("postupdate", () => {
 })
 game.add(mike);
 game.add(han);
-
+game.add(mikeLabel);
 
 game.start()
