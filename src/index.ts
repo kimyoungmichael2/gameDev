@@ -1,18 +1,20 @@
 // Excalibur is loaded into the ex global namespace
-import { Actor, Engine, Color, CollisionType, Label, TextAlign} from 'excalibur'
+import { Actor, Engine, Color, CollisionType, Label, TextAlign, vec } from 'excalibur'
 
 // ./src/index.ts
 const game = new Engine({
-    width: 800,
-    height: 400,
-  })
+    width: 1000,
+    height: 1400,
+})
 
 const mike = new Actor({
     x: 800,
     y: 150,
-    width:50,
-    height:50,
+    width: 50,
+    height: 50,
 });
+
+
 
 const mikeLabel = new Label('Michael', mike.pos.x, mike.pos.y, '100px Arial');
 mikeLabel.fontSize = 100;
@@ -25,9 +27,39 @@ const han = new Actor({
     height: 50,
 })
 
+const hexagon = new Actor({
+    x: 200,
+    y: 200,
+})
+
+function hex_corner(size: number, i: number) {
+    let angle_deg = 60 * i;
+    let angle_rad = Math.PI / 180 * angle_deg;
+    let x = size * Math.cos(angle_rad);
+    let y = size * Math.sin(angle_rad);
+    return { x: x, y: y };
+}
+
+let hexSize = 50;
+
+function hexPoints(hexSize: number) {
+    let vectors = [];
+    for (let i = 0; i <= 5; i++) {
+        let vector = hex_corner(hexSize, i);
+        vectors.push(vector);
+    }
+    return vectors;
+}
+
+let vecs = hexPoints(hexSize);
+
+hexagon.body.usePolygonCollider([vec(vecs[0].x, vecs[0].y), vec(vecs[1].x, vecs[1].y), vec(vecs[2].x, vecs[2].y), vec(vecs[3].x, vecs[3].y), vec(vecs[4].x, vecs[4].y), vec(vecs[5].x, vecs[5].y)])
+hexagon.color = Color.Green;
+
 mike.color = Color.Orange;
 han.body.useCircleCollider(50);
-han.color = Color.Black;
+han.color = Color.White;
+
 
 // game.input.pointers.primary.on("move", (evt) => {
 //     mike.pos.x = evt.worldPos.x;
@@ -134,5 +166,6 @@ han.on("postupdate", () => {
 game.add(mike);
 game.add(han);
 game.add(mikeLabel);
+game.add(hexagon);
 
 game.start()
